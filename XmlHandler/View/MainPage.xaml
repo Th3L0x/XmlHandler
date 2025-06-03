@@ -1,0 +1,150 @@
+﻿<Window
+    x:Class="XmlHandler.View.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:XmlHandler"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:XmlHandler.ViewModel"
+    Title="{Binding Title, Mode=OneTime}"
+    Width="800"
+    Height="450"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="ToolWindow"
+    mc:Ignorable="d">
+    <Grid>
+        <Button
+            Margin="5"
+            Padding="5"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Command="{Binding OpenConfigCommand}">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoaded}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="Segoe MDL2 Assets"
+                    FontSize="24"
+                    Text="&#xE8E5;" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="24"
+                    Text="Load File" />
+            </StackPanel>
+        </Button>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel
+                Grid.Row="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoaded}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Button
+                    Margin="5"
+                    Padding="5"
+                    Command="{Binding AddUserCommand}"
+                    Content="&#xE710;"
+                    FontFamily="Segoe MDL2 Assets"
+                    FontSize="16"
+                    ToolTip="New (+)" />
+
+                <Button
+                    Margin="5"
+                    Padding="5"
+                    Command="{Binding SaveCommand}"
+                    Content="&#xE74E;"
+                    FontFamily="Segoe MDL2 Assets"
+                    FontSize="16"
+                    ToolTip="Save Changes" />
+
+                <Button
+                    Margin="5"
+                    Padding="5"
+                    Command="{Binding DeleteSelectedCommand}"
+                    CommandParameter="{Binding ElementName=datagrid, Path=SelectedItems}"
+                    Content="&#xE74D;"
+                    FontFamily="Segoe MDL2 Assets"
+                    FontSize="16"
+                    ToolTip="Delete" />
+            </StackPanel>
+            <DataGrid
+                x:Name="datagrid"
+                Grid.Row="1"
+                MinWidth="0"
+                MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Window}}"
+                Margin="10"
+                HorizontalAlignment="Stretch"
+                AllowDrop="True"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserDeleteRows="True"
+                Drop="DataGrid_Drop"
+                HorizontalScrollBarVisibility="Disabled"
+                IsReadOnly="False"
+                ItemsSource="{Binding Users}"
+                MouseMove="DataGrid_MouseMove"
+                PreviewMouseLeftButtonDown="DataGrid_PreviewMouseLeftButtonDown"
+                SelectedCellsChanged="datagrid_SelectedCellsChanged"
+                SelectionMode="Extended"
+                SelectionUnit="FullRow"
+                VerticalScrollBarVisibility="Auto">
+                <DataGrid.Style>
+                    <Style TargetType="DataGrid">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoaded}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Style>
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        Header="First Name" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        Header="Last Name" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding CivilStateConverted}"
+                        Header="Civil State" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

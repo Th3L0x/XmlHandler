@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<UserInformation>
+  <Users>
+    <User FirstName="Adam" LastName="Adam" CivilState="1" />
+    <User FirstName="Nils" LastName="Nilsson" CivilState="2" />
+    <User FirstName="Lara" LastName="Craft" CivilState="1" />
+  </Users>
+</UserInformation>
